@@ -1,5 +1,6 @@
 package tasks;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -12,14 +13,13 @@ public class FindMinMax {
             Comparator<? super T> order,
             BiConsumer<? super T, ? super T> minMaxConsumer) {
         List<? extends T> list = stream
-                .sorted(order)
                 .collect(Collectors.toList());
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             minMaxConsumer.accept(null, null);
             return;
         }
-        T min = list.get(0);
-        T max = list.get(list.size() - 1);
+        T min = Collections.min(list, order);
+        T max = Collections.max(list, order);
         minMaxConsumer.accept(min, max);
     }
 }
